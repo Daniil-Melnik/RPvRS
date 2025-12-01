@@ -12,7 +12,16 @@ import lombok.ToString;
 @ToString
 public class Car {
     private String regNumber;
-    private CarBrand carBrand;
-    private CarModel carModel;
-    private Colors color;
+    private String carModel;
+    private String color;
+
+    public Car(String regNumber, String carModel, String color){
+        this.regNumber = regNumber;
+        this.carModel = carModel;
+        this.color = color;
+    }
+
+    public Car(){
+        this(null, null, null);
+    }
 }

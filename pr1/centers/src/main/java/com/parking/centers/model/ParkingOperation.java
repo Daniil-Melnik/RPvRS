@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import java.util.Date;
 
+
 @Getter
 @Setter
 @ToString
@@ -14,5 +15,6 @@ public class ParkingOperation {
     private Date startTime;
     private Date endTime;
     private String placeNo;
-    private ParkingNode parkingNode;
+    private String parkingNodeName;
+    private Car car;
 }
