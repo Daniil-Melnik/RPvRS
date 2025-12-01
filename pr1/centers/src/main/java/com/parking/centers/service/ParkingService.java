@@ -3,6 +3,7 @@ package com.parking.centers.service;
 import com.parking.centers.model.Car;
 import com.parking.centers.model.ParkingOperation;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 
@@ -30,5 +31,16 @@ public class ParkingService {
             responseMessage = String.format("This is the post and the object is: %s", parkingOperation.toString());
         }
         return responseMessage;
+    }
+
+    public ParkingOperation updateParkingOperation(ParkingOperation parkingOperation,String newRegNum){
+        if (parkingOperation != null){
+            parkingOperation.setCar(new Car(newRegNum));
+        }
+        return parkingOperation;
+    }
+
+    public String deleteParkingOperation(int id){
+        return String.format("Parking operation with id = %d was deleted", id);
     }
 }
