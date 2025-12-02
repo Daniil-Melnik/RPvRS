@@ -34,12 +34,11 @@ public class ParkingController {
     }
 
     @PutMapping("/updParking/{newCarRegNum}")
-    public  ResponseEntity<ParkingOperation> updateParkingOperation(
+    public  ResponseEntity<String> updateParkingOperation(
             @PathVariable ("newCarRegNum") String newCarRegNum,
             @RequestBody ParkingOperation parkingOperation
     ) {
-        ParkingOperation parkingOperation1 = parkingService.updateParkingOperation(parkingOperation, newCarRegNum);
-        return ResponseEntity.ok(parkingOperation);
+        return ResponseEntity.ok(parkingService.updateParkingOperation(parkingOperation, newCarRegNum));
     }
 
     @DeleteMapping("/deleteParkingOperation/{id}")
