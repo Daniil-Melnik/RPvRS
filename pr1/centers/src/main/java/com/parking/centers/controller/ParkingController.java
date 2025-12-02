@@ -31,7 +31,7 @@ public class ParkingController {
             @PathVariable ("parkingNodeName") String parkingNodeName,
             @PathVariable ("parkingPlaceNo") String parkingPlaceNo,
             @RequestBody ParkingOperation parkingOperation,
-            @RequestHeader (value = "Accept-Language", required = false) Locale locale
+            @RequestHeader (value = "Accept-Languag", required = false) Locale locale
     ){
         return ResponseEntity.ok(parkingService.createParkingOperation(parkingOperation, parkingNodeName, parkingPlaceNo, locale));
     }
@@ -40,7 +40,7 @@ public class ParkingController {
     public  ResponseEntity<String> updateParkingOperation(
             @PathVariable ("newCarRegNum") String newCarRegNum,
             @RequestBody ParkingOperation parkingOperation,
-            @RequestHeader (value = "Accept-Language", required = false) Locale locale
+            @RequestHeader (value = "Accept-Languag", required = false) Locale locale
     ) {
 
         return ResponseEntity.ok(parkingService.updateParkingOperation(parkingOperation, newCarRegNum, locale));
@@ -49,7 +49,7 @@ public class ParkingController {
     @DeleteMapping("/deleteParkingOperation/{id}")
     public ResponseEntity<String> deleteParkingOperation(
             @PathVariable("id") int id,
-            @RequestHeader (value = "Accept-Language", required = false) Locale locale
+            @RequestHeader (value = "Accept-Languag", required = false) Locale locale
     ){
         return ResponseEntity.ok(parkingService.deleteParkingOperation(id, locale));
     }
