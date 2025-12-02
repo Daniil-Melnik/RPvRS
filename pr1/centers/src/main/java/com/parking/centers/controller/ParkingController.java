@@ -4,6 +4,7 @@ import com.parking.centers.model.Car;
 import com.parking.centers.model.ParkingOperation;
 import com.parking.centers.service.ParkingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,9 @@ import java.util.Locale;
 public class ParkingController {
     @Autowired
     private ParkingService parkingService;
+
+    @Autowired
+    MessageSource messages;
 
     @GetMapping(value = "/{parkingNodeName}/{parkingPlaceNo}/{id}/{carRegNum}")
     public ResponseEntity<ParkingOperation> getParkingOperation(
@@ -31,8 +35,11 @@ public class ParkingController {
             @PathVariable ("parkingNodeName") String parkingNodeName,
             @PathVariable ("parkingPlaceNo") String parkingPlaceNo,
             @RequestBody ParkingOperation parkingOperation,
-            @RequestHeader (value = "Accept-Languag", required = false) Locale locale
+            @RequestHeader (value = "Accept-Language", required = false) Locale locale
     ){
+        //System.out.println(parkingService.createParkingOperation(parkingOperation, parkingNodeName, parkingPlaceNo, locale));
+        System.out.println((messages.getMessage("parkingSystem.create.message", null, locale)));
+        System.out.println(locale.getLanguage().toString());
         return ResponseEntity.ok(parkingService.createParkingOperation(parkingOperation, parkingNodeName, parkingPlaceNo, locale));
     }
 
@@ -40,16 +47,17 @@ public class ParkingController {
     public  ResponseEntity<String> updateParkingOperation(
             @PathVariable ("newCarRegNum") String newCarRegNum,
             @RequestBody ParkingOperation parkingOperation,
-            @RequestHeader (value = "Accept-Languag", required = false) Locale locale
+            @RequestHeader (value = "Accept-Language", required = false) Locale locale
     ) {
-
+        System.out.println((messages.getMessage("parkingSystem.update.message", null, locale)));
+        System.out.println(locale.getLanguage().toString());
         return ResponseEntity.ok(parkingService.updateParkingOperation(parkingOperation, newCarRegNum, locale));
     }
 
     @DeleteMapping("/deleteParkingOperation/{id}")
     public ResponseEntity<String> deleteParkingOperation(
             @PathVariable("id") int id,
-            @RequestHeader (value = "Accept-Languag", required = false) Locale locale
+            @RequestHeader (value = "Accept-Language", required = false) Locale locale
     ){
         return ResponseEntity.ok(parkingService.deleteParkingOperation(id, locale));
     }

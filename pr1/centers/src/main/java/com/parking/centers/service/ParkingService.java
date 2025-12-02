@@ -29,12 +29,13 @@ public class ParkingService {
     }
 
     public String createParkingOperation(ParkingOperation parkingOperation, String parkingCenterName, String parkingPlaceNo, Locale locale){
-        String responseMessage = null;
+        String responseMessage = "poor";
 
         if (parkingOperation != null){
             parkingOperation.setParkingNodeName(parkingCenterName);
             parkingOperation.setPlaceNo(parkingPlaceNo);
             responseMessage = String.format(messages.getMessage("parkingSystem.create.message", null, locale), parkingOperation.toString());
+            System.out.println("NOT POOR");
         }
         return responseMessage;
     }
