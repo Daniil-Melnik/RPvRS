@@ -33,11 +33,14 @@ public class ParkingService {
         return responseMessage;
     }
 
-    public ParkingOperation updateParkingOperation(ParkingOperation parkingOperation,String newRegNum){
+    public String updateParkingOperation(ParkingOperation parkingOperation,String newRegNum){
+        String responceMessage = null;
         if (parkingOperation != null){
             parkingOperation.setCar(new Car(newRegNum));
+            responceMessage = String.format("Parking operation with id = %d updated - new reg no for car - %s", parkingOperation.getRegNumOfParkingAct(), newRegNum);
         }
-        return parkingOperation;
+        responceMessage = String.format("Parking operation with id = %d updated - new reg no for car - %s", parkingOperation.getRegNumOfParkingAct(), newRegNum);
+        return responceMessage;
     }
 
     public String deleteParkingOperation(int id){
