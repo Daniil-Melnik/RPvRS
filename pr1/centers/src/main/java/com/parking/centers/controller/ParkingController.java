@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.Locale;
 
@@ -24,9 +26,16 @@ public class ParkingController {
             @PathVariable("id") int regOperationNo,
             @PathVariable("carRegNum") String carRegNum,
             @PathVariable("parkingNodeName") String parkingNodeName,
-            @PathVariable("parkingPlaceNo") String parkingPlaceNo
+            @PathVariable("parkingPlaceNo") String parkingPlaceNo,
+            @RequestHeader (value = "Accept-Language", required = false) Locale locale
     ){
         ParkingOperation parkingOperation = parkingService.getParkingOperation(regOperationNo, parkingNodeName, parkingPlaceNo, new Car(carRegNum));
+
+        parkingOperation.add(linkTo(methodOn(ParkingController.class).getParkingOperation(regOperationNo, carRegNum, parkingNodeName,parkingPlaceNo, locale)).withSelfRel());
+        parkingOperation.add(linkTo(methodOn(ParkingController.class).createParkingOperation(parkingNodeName, parkingPlaceNo, parkingOperation, null)).withRel(messages.getMessage("parkingSystem.create.link.message", null, locale)));
+        parkingOperation.add(linkTo(methodOn(ParkingController.class).updateParkingOperation(carRegNum, parkingOperation,null)).withRel(messages.getMessage("parkingSystem.update.link.message", null, locale)));
+        parkingOperation.add(linkTo(methodOn(ParkingController.class).deleteParkingOperation(regOperationNo, null)).withRel(messages.getMessage("parkingSystem.delete.link.message", null, locale)));
+
         return ResponseEntity.ok(parkingOperation);
     }
 
