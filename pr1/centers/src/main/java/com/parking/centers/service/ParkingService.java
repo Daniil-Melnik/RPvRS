@@ -2,19 +2,13 @@ package com.parking.centers.service;
 
 import com.parking.centers.model.Car;
 import com.parking.centers.model.ParkingOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
-import java.util.Locale;
 
 @Service
 public class ParkingService {
-    @Autowired
-    MessageSource messages;
-
     public ParkingOperation getParkingOperation(int id, String parkingNodeName, String placeNo, Car car){
         ParkingOperation parkingOperation = new ParkingOperation();
 
@@ -28,28 +22,28 @@ public class ParkingService {
         return parkingOperation;
     }
 
-    public String createParkingOperation(ParkingOperation parkingOperation, String parkingCenterName, String parkingPlaceNo, Locale locale){
-        String responseMessage = "poor";
+    public String createParkingOperation(ParkingOperation parkingOperation, String parkingCenterName, String parkingPlaceNo){
+        String responseMessage = null;
 
         if (parkingOperation != null){
             parkingOperation.setParkingNodeName(parkingCenterName);
             parkingOperation.setPlaceNo(parkingPlaceNo);
-            responseMessage = String.format(messages.getMessage("parkingSystem.create.message", null, locale), parkingOperation.toString());
-            System.out.println("NOT POOR");
+            responseMessage = String.format("This is the post and the object is: %s", parkingOperation.toString());
         }
         return responseMessage;
     }
 
-    public String updateParkingOperation(ParkingOperation parkingOperation,String newRegNum, Locale locale){
+    public String updateParkingOperation(ParkingOperation parkingOperation,String newRegNum){
         String responceMessage = null;
         if (parkingOperation != null){
             parkingOperation.setCar(new Car(newRegNum));
-            responceMessage = String.format(messages.getMessage("parkingSystem.update.message", null, locale), parkingOperation.getRegNumOfParkingAct(), newRegNum);
+            responceMessage = String.format("Parking operation with id = %d updated - new reg no for car - %s", parkingOperation.getRegNumOfParkingAct(), newRegNum);
         }
+        responceMessage = String.format("Parking operation with id = %d updated - new reg no for car - %s", parkingOperation.getRegNumOfParkingAct(), newRegNum);
         return responceMessage;
     }
 
-    public String deleteParkingOperation(int id, Locale locale){
-        return String.format(messages.getMessage("parkingSystem.delete.message", null, locale), id);
+    public String deleteParkingOperation(int id){
+        return String.format("Parking operation with id = %d was deleted", id);
     }
 }
