@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.List;
 import java.util.Locale;
 
 @RestController
@@ -20,6 +21,18 @@ public class ParkingController {
 
     @Autowired
     MessageSource messages;
+
+    @GetMapping("/node/{nodeName}")
+    public ResponseEntity<List<ParkingOperation>> getByNodeName(@PathVariable String nodeName) {
+        List<ParkingOperation> operations = parkingService.getParkingOperationsByNode(nodeName);
+        return ResponseEntity.ok(operations);
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<ParkingOperation>> getActiveParkings() {
+        List<ParkingOperation> operations = parkingService.getActiveParkings();
+        return ResponseEntity.ok(operations);
+    }
 
     @GetMapping(value = "/{parkingNodeName}/{parkingPlaceNo}/{id}/{carRegNum}")
     public ResponseEntity<ParkingOperation> getParkingOperation(
