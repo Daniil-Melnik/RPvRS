@@ -9,6 +9,7 @@ import java.util.Optional;
 @Repository
 public interface CarRepository extends CrudRepository<Car, String> {
     Optional<Car> findByRegNumber(String regNumber);
-
     boolean existsByRegNumber(String regNumber);
+
+    void deleteByRegNumber(String regNumber);
 }
