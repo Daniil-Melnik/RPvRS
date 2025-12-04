@@ -25,12 +25,21 @@ public class ParkingService {
     @Autowired
     ServiceConfig config;
 
-    public List<ParkingOperation> getParkingOperationsByNode(String nodeName) {
-        return parkingRepository.findByParkingNodeName(nodeName);
+    public List<ParkingOperation> getParkingOperationsByNode(String nodeName, Locale locale) {
+        List<ParkingOperation> parkingOperations = parkingRepository.findByParkingNodeName(nodeName);
+        if (null == parkingOperations) {
+            throw new IllegalArgumentException(String.format(messages.getMessage("parkingSystem.search.error.message", null, null)));
+        }
+
+        return parkingOperations;
     }
 
-    public List<ParkingOperation> getActiveParkings() {
-        return parkingRepository.findByEndTimeIsNull();
+    public List<ParkingOperation> getActiveParkings(Locale locale) {
+        List<ParkingOperation> parkingOperations =  parkingRepository.findByEndTimeIsNull();
+        if (null == parkingOperations) {
+            throw new IllegalArgumentException(String.format(messages.getMessage("parkingSystem.search.error.message", null, null)));
+        }
+        return parkingOperations;
     }
 
 

@@ -23,14 +23,19 @@ public class ParkingController {
     MessageSource messages;
 
     @GetMapping("/node/{nodeName}")
-    public ResponseEntity<List<ParkingOperation>> getByNodeName(@PathVariable String nodeName) {
-        List<ParkingOperation> operations = parkingService.getParkingOperationsByNode(nodeName);
+    public ResponseEntity<List<ParkingOperation>> getByNodeName(
+            @PathVariable String nodeName,
+            @RequestHeader (value = "Accept-Language", required = false) Locale locale
+    ) {
+        List<ParkingOperation> operations = parkingService.getParkingOperationsByNode(nodeName, locale);
         return ResponseEntity.ok(operations);
     }
 
     @GetMapping("/active")
-    public ResponseEntity<List<ParkingOperation>> getActiveParkings() {
-        List<ParkingOperation> operations = parkingService.getActiveParkings();
+    public ResponseEntity<List<ParkingOperation>> getActiveParkings(
+            @RequestHeader (value = "Accept-Language", required = false) Locale locale
+    ) {
+        List<ParkingOperation> operations = parkingService.getActiveParkings(locale);
         return ResponseEntity.ok(operations);
     }
 
