@@ -198,7 +198,11 @@ public class ParkingService {
             String responseMessage = String.format(
                     messages.getMessage("parkingSystem.update.message", null, locale),
                     existing.getRegNumOfParkingAct(),
-                    existing.getCar() != null ? existing.getCar().getRegNumber() : "N/A"
+                    existing.getCar() != null ? existing.getCar().getRegNumber() : "N/A",
+                    existing.getStartTime(),
+                    existing.getEndTime(),
+                    existing.getPlaceNo(),
+                    existing.getParkingNodeName()
             );
 
             return responseMessage;
