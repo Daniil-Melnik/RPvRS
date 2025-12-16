@@ -86,7 +86,7 @@ public class ParkingService {
         return responseMessage;
     }
 
-    public String updateParkingOperation(ParkingOperation parkingOperation,
+    /*public String updateParkingOperation(ParkingOperation parkingOperation,
                                          String newRegNum,
                                          Locale locale) {
 
@@ -130,10 +130,88 @@ public class ParkingService {
         }
 
         return responseMessage;
+    }*/
+
+    public String updateParkingOperation(ParkingOperation parkingOperation,
+                                         Locale locale) {
+
+        if (parkingOperation == null) {
+            return messages.getMessage("parkingSystem.update.error.null", null, locale);
+        }
+
+        ParkingOperation existing = parkingRepository
+                .findById(parkingOperation.getRegNumOfParkingAct())
+                .orElse(null);
+
+        if (existing == null) {
+            return String.format(
+                    messages.getMessage("parkingSystem.update.error.notfound", null, locale),
+                    parkingOperation.getRegNumOfParkingAct()
+            );
+        }
+
+        if (parkingOperation.getCar() != null &&
+                parkingOperation.getCar().getRegNumber() != null &&
+                !parkingOperation.getCar().getRegNumber().trim().isEmpty()) {
+
+            String newRegNum = parkingOperation.getCar().getRegNumber();
+
+            Car existingCar = carRepository.findById(newRegNum).orElse(null);
+            if (existingCar == null) {
+                Car newCar = new Car(newRegNum);
+                carRepository.save(newCar);
+                existing.setCar(newCar);
+            } else {
+                existing.setCar(existingCar);
+            }
+        }
+
+        if (parkingOperation.getStartTime() != null) {
+            existing.setStartTime(parkingOperation.getStartTime());
+        }
+
+        existing.setEndTime(parkingOperation.getEndTime());
+
+        if (parkingOperation.getPlaceNo() != null) {
+            existing.setPlaceNo(parkingOperation.getPlaceNo());
+        }
+
+        if (parkingOperation.getParkingNodeName() != null) {
+            existing.setParkingNodeName(parkingOperation.getParkingNodeName());
+        }
+
+        if (existing.getStartTime() != null && existing.getEndTime() != null) {
+            if (existing.getEndTime().before(existing.getStartTime())) {
+                return messages.getMessage("parkingSystem.update.error.time", null, locale);
+            }
+        }
+
+        if (existing.getStartTime() == null ||
+                existing.getPlaceNo() == null || existing.getPlaceNo().trim().isEmpty() ||
+                existing.getParkingNodeName() == null || existing.getParkingNodeName().trim().isEmpty()) {
+            return messages.getMessage("parkingSystem.update.error.required", null, locale);
+        }
+
+        try {
+            parkingRepository.save(existing);
+
+            String responseMessage = String.format(
+                    messages.getMessage("parkingSystem.update.message", null, locale),
+                    existing.getRegNumOfParkingAct(),
+                    existing.getCar() != null ? existing.getCar().getRegNumber() : "N/A"
+            );
+
+            return responseMessage;
+
+        } catch (Exception e) {
+            return String.format(
+                    messages.getMessage("parkingSystem.update.error.save", null, locale),
+                    e.getMessage()
+            );
+        }
     }
 
     public String deleteParkingOperation(int id, Locale locale) {
-        // Удаляем из базы
         parkingRepository.deleteById(id);
 
         return String.format(
