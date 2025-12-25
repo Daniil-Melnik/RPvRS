@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 @Service
 public class ParkingService {
@@ -86,51 +87,29 @@ public class ParkingService {
         return responseMessage;
     }
 
-    /*public String updateParkingOperation(ParkingOperation parkingOperation,
-                                         String newRegNum,
-                                         Locale locale) {
-
-        String responseMessage = null;
-
-        if (parkingOperation != null) {
-            // Получаем существующую запись
-            ParkingOperation existing = parkingRepository
-                    .findById(parkingOperation.getRegNumOfParkingAct())
-                    .orElse(null);
-
-            if (existing != null) {
-                // Обновляем автомобиль
-                Car newCar = new Car(newRegNum);
-                carRepository.save(newCar);
-                existing.setCar(newCar);
-
-                // Обновляем другие поля если они есть
-                if (parkingOperation.getEndTime() != null) {
-                    existing.setEndTime(parkingOperation.getEndTime());
-                }
-                if (parkingOperation.getStartTime() != null) {
-                    existing.setStartTime(parkingOperation.getStartTime());
-                }
-                if (parkingOperation.getPlaceNo() != null) {
-                    existing.setPlaceNo(parkingOperation.getPlaceNo());
-                }
-                if (parkingOperation.getParkingNodeName() != null) {
-                    existing.setParkingNodeName(parkingOperation.getParkingNodeName());
-                }
-
-                // Сохраняем изменения
-                parkingRepository.save(existing);
-
-                responseMessage = String.format(
-                        messages.getMessage("parkingSystem.update.message", null, locale),
-                        existing.getRegNumOfParkingAct(),
-                        newRegNum
-                );
-            }
+    public List<ParkingOperation> getParkingOperationByPlaceNo(String placeNo){
+        List<ParkingOperation> parkingOperations =  parkingRepository.findByPlaceNo(placeNo);
+        if (null == parkingOperations) {
+            throw new IllegalArgumentException(String.format(messages.getMessage("parkingSystem.search.error.message", null, null)));
         }
+        return parkingOperations;
+    }
 
-        return responseMessage;
-    }*/
+    public Optional<ParkingOperation> getParkingOperationByID(int id){
+        Optional<ParkingOperation> parkingOperation = parkingRepository.findById(id);
+        if (null == parkingOperation) {
+            throw new IllegalArgumentException(String.format(messages.getMessage("parkingSystem.search.error.message", null, null)));
+        }
+        return parkingOperation;
+    }
+
+    public List<ParkingOperation> getParkingOperationsByCarRegNum(String regNum){
+        List<ParkingOperation> parkingOperations =  parkingRepository.findByCar_RegNumber(regNum);
+        if (null == parkingOperations) {
+            throw new IllegalArgumentException(String.format(messages.getMessage("parkingSystem.search.error.message", null, null)));
+        }
+        return parkingOperations;
+    }
 
     public String updateParkingOperation(ParkingOperation parkingOperation,
                                          Locale locale) {

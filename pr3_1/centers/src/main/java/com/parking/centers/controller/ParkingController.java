@@ -12,6 +12,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "parkingCenters")
@@ -28,6 +29,30 @@ public class ParkingController {
             @RequestHeader (value = "Accept-Language", required = false) Locale locale
     ) {
         List<ParkingOperation> operations = parkingService.getParkingOperationsByNode(nodeName, locale);
+        return ResponseEntity.ok(operations);
+    }
+
+    @GetMapping("/getByPlaceNo/{placeNo}")
+    public ResponseEntity<List<ParkingOperation>> getByPlaceNo(
+            @PathVariable String placeNo
+    ) {
+        List<ParkingOperation> operations = parkingService.getParkingOperationByPlaceNo(placeNo);
+        return ResponseEntity.ok(operations);
+    }
+
+    @GetMapping("/getByOperationID/{id}")
+    public ResponseEntity<Optional<ParkingOperation>> getByOperationID(
+            @PathVariable int id
+    ) {
+        Optional<ParkingOperation> operation = parkingService.getParkingOperationByID(id);
+        return ResponseEntity.ok(operation);
+    }
+
+    @GetMapping("/findByCar_RegNumber/{regNumber}")
+    public ResponseEntity<List<ParkingOperation>> findByCarRegNumber(
+            @PathVariable String regNumber
+    ) {
+        List<ParkingOperation> operations = parkingService.getParkingOperationsByCarRegNum(regNumber);
         return ResponseEntity.ok(operations);
     }
 
