@@ -69,5 +69,6 @@
     </ul>
   </li>
 </ul></p>
+<p>Header-переменная <code>Accept-Language</code> может принимать значения: <code>ru, en, cs</code></p>
 
 
