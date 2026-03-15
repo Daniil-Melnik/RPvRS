@@ -16,7 +16,7 @@
 </ul>
 <h2>Архитектура</h2>
 <p>Приложение предназначено для интеграции в распределённую систему с микросервисной архитектурой в виде отдельного микросервиса.</p>
-<p>Состоит из трёх частей: сервер конечных точек, сервер конфигурации и базы данных</p>
+<p>Состоит из трёх частей: сервер конечных точек, сервер конфигурации и базы данных. Код сервера конечных точек помещен в папке <a href="pr3_1">pr3_1</a>, сервера конфигураций в <a href="pr3_2">pr3_2</a>. Бэкап базы данных parking находится в файле <a href="parking_backup.sql">parking_backup.sql</a></p>
 <h2>ПО при разработке</h2>
 <ul>
   <li>ОС Windows 10 22h2 / Linux Ubuntu 24.04</li>
@@ -25,5 +25,17 @@
   <li>IDE InteliJ Idea 2025 CE</li>
   <li>Maven v3.9.14 <a href="https://dlcdn.apache.org/maven/maven-3/3.9.14/binaries/apache-maven-3.9.14-bin.zip">скачать</a></li>
 </ul>
+<h2>Запуск</h2>
+<p>В ппапке <a href="pr3_jars">pr3_jars</a> находится два исполняемых jar-архива: configserver и centers. Для запуска необходимо: <ul>
+  <li>Развернуть локально PostgreSQL, создать БД parking. Креды для подключения со стороны сервера конечных точек, которым должен отвечать сервер СУБД и БД:
+  <ul>
+    <li>источник - jdbc:postgresql://localhost:5432/parking</li>
+    <li>логин - admin</li>
+    <li>пароль - 12345678</li>
+  </ul>
+  </li>
+  <li>Запустить сервер конфигураций - java -jar .\configserver-x.x.x-SNAPSHOT.jar </li>
+  <li>Запустить сервер конечных точек - java -jar .\centers-0.0.1-SNAPSHOT.jar</li>
+</ul></p>
 https://daniil-melnik-7665589.postman.co/workspace/daniil-melnik's-Workspace~f87cf77f-5c45-4e25-85e1-458e9f8f8325/collection/49495678-95236611-e7a0-4b0a-af8d-00cb07a9f1fa?action=share&creator=49495678
 
