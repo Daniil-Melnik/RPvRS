@@ -41,5 +41,31 @@
 </ul></p>
 <h2>Взаимодействие с приложением</h2>
 <p>Для отправки запросов и получения ответов применяется приложение Postman. Как пример, демонстрирующий форматы запросов, входящие в них значения header переменных можно рассмотреть <a href="https://daniil-melnik-7665589.postman.co/workspace/daniil-melnik's-Workspace~f87cf77f-5c45-4e25-85e1-458e9f8f8325/collection/49495678-95236611-e7a0-4b0a-af8d-00cb07a9f1fa?action=share&creator=49495678">рабочее пространство</a></p>
+<p>Форматы запросов:
+<ul>
+  <li>GET:
+  <ul>
+    <li>/node/{nodeName}</li>
+    <li>/getByPlaceNo/{placeNo}</li>
+    <li>/getByOperationID/{id}</li>
+    <li>/findByCar_RegNumber/{regNumber}</li>
+    <li>/active</li>
+    <li>/{parkingNodeName}/{parkingPlaceNo}/{id}/{carRegNum}</li>
+  </ul>
+  </li>
+  <li>POST:
+  <ul>
+    <li>/{parkingNodeName}/{parkingPlaceNo}</li>
+  </ul>  
+  </li>
+  <li>PUT:
+    <ul>
+      <li>/updParking</li>
+    </ul>
+  </li>
+  <li>DELETE:
+    <li>/deleteParkingOperation/{id}</li>
+  </li>
+</ul></p>
 
 
